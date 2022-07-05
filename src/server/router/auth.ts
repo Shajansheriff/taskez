@@ -1,11 +1,21 @@
 import { TRPCError } from "@trpc/server";
 import { createRouter } from "./context";
 import { z } from "zod";
+import { signupSchema } from "../../schemas/signup";
 
 export const authRouter = createRouter()
   .query("getSession", {
     resolve({ ctx }) {
       return ctx.session;
+    },
+  })
+  .mutation("signup", {
+    input: signupSchema,
+    resolve({ input, ctx }) {
+      const user = ctx.prisma.user.create({
+        data: { email: input.email, name: input.name },
+      });
+      return user;
     },
   })
   .middleware(async ({ ctx, next }) => {
