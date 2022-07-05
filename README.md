@@ -1,6 +1,6 @@
 # Taskez
 
-A task management app
+A task management app.
 
 ```
 npm run dev
