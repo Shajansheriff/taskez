@@ -4,6 +4,7 @@ import { trpc } from "../utils/trpc";
 import { signupSchema } from "../schemas/signup";
 import { z } from "zod";
 import Image from "next/image";
+import { Input } from "../components/common";
 
 type FormValues = z.infer<typeof signupSchema>;
 
@@ -34,13 +35,13 @@ export default function LoginPage() {
             <form
               onSubmit={handleSubmit((data) => signupMutation.mutate(data))}
             >
-              <input
+              <Input
                 type="text"
                 placeholder="Full Name"
                 {...register("name")}
               />
-              <input type="email" placeholder="Email" {...register("email")} />
-              <input
+              <Input type="email" placeholder="Email" {...register("email")} />
+              <Input
                 type="password"
                 placeholder="Password"
                 {...register("password")}
