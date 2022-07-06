@@ -8,3 +8,11 @@ body,
   height: 100%;
   margin: 0;
 }
+
+.auth_tabs button[data-state="inactive"] {
+  color: rgba(26, 59, 88, 0.33);
+}
+.auth_tabs button[data-state="active"] {
+  box-shadow: inset 0 -3px 0 0 #1a3b58;
+  color: #1a3b58;
+}
