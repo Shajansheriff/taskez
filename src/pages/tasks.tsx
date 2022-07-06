@@ -15,9 +15,7 @@ const TaskDrawerWithoutSSR = dynamic(
 export default function TasksPage() {
   return (
     <>
-      <main className="relative overflow-x-auto">
-        <BoardWithoutSSR />
-      </main>
+      <BoardWithoutSSR />
       <TaskDrawerWithoutSSR />
     </>
   );

@@ -18,7 +18,7 @@ export default function Board() {
     columnOrder: string[];
   }>({
     columns: statuses.reduce((obj, status) => {
-      const tasks = Array.from({ length: 20 }, (_, index) => {
+      const tasks = Array.from({ length: 2 }, (_, index) => {
         return {
           id: String(index + 1) + status,
           name: "Hello " + index + status,
@@ -110,7 +110,7 @@ export default function Board() {
   }
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex flex-nowrap gap-6">
+      <div className="flex flex-nowrap gap-6 overflow-x-auto">
         {Object.values(state.columns).map((column) => (
           <div
             key={column.id}

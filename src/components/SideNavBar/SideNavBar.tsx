@@ -1,0 +1,70 @@
+import clsx from "clsx";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ReactElement } from "react";
+import { NavItem } from "./NavLink";
+
+const MAIN_NAV_ITEMS = [
+  {
+    name: "Overview",
+    path: "/home",
+  },
+  {
+    name: "Stats",
+    path: "/stats",
+  },
+  {
+    name: "Tasks",
+    path: "/tasks",
+  },
+  {
+    name: "Chat",
+    path: "/chat",
+  },
+  {
+    name: "Calendar",
+    path: "/calendar",
+  },
+];
+
+const SECONDARY_NAV_ITEMS = [
+  {
+    name: "Settings",
+    path: "/settings",
+  },
+  {
+    name: "Logout",
+    path: "/logout",
+  },
+];
+
+export function SideNavBar() {
+  return (
+    <aside
+      className={clsx(
+        "w-72 box-border h-full flex-shrink-0",
+        "shadow-[inset_-2px_0_0_rgba(240,240,240,1)]"
+      )}
+    >
+      <div className="h-full flex flex-col space-y-8 py-12">
+        <div className="text-xl font-medium px-14 shrink-0">taskez</div>
+        <div className="flex flex-col flex-grow">
+          <nav className="flex flex-col flex-grow space-y-4">
+            {MAIN_NAV_ITEMS.map((item) => (
+              <NavItem key={item.path} href={item.path}>
+                {item.name}
+              </NavItem>
+            ))}
+          </nav>
+          <nav className="flex flex-col space-y-4">
+            {SECONDARY_NAV_ITEMS.map((item) => (
+              <NavItem key={item.path} href={item.path}>
+                {item.name}
+              </NavItem>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </aside>
+  );
+}
