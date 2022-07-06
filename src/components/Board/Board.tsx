@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Link from "next/link";
 import { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { reorderList } from "./reorder";
@@ -135,25 +136,32 @@ export default function Board() {
                       index={index}
                     >
                       {(dragProvided, dragSnapshot) => (
-                        <div
-                          ref={dragProvided.innerRef}
-                          {...dragProvided.draggableProps}
-                          {...dragProvided.dragHandleProps}
-                          className={clsx(
-                            "w-72",
-                            "bg-white p-4 rounded-lg shadow select-none mb-4",
-                            "outline-primary",
-                            dragSnapshot.isDragging &&
-                              "outline-none shadow-md bg-green-100"
-                          )}
+                        <Link
+                          href={`/tasks?taskId=${item.id}`}
+                          as={`/tasks/${item.id}`}
                         >
-                          <div className="w-full space-y-4">
-                            <h4 className="text-sm font-medium">{item.name}</h4>
-                            <p className="text-xs text-[#6B6B6B]">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
+                          <a
+                            ref={dragProvided.innerRef}
+                            {...dragProvided.draggableProps}
+                            {...dragProvided.dragHandleProps}
+                            className={clsx(
+                              "block w-72",
+                              "bg-white p-4 rounded-lg shadow select-none mb-4",
+                              "outline-primary",
+                              dragSnapshot.isDragging &&
+                                "outline-none shadow-md bg-green-100"
+                            )}
+                          >
+                            <div className="w-full space-y-4">
+                              <h4 className="text-sm font-medium">
+                                {item.name}
+                              </h4>
+                              <p className="text-xs text-[#6B6B6B]">
+                                {item.description}
+                              </p>
+                            </div>
+                          </a>
+                        </Link>
                       )}
                     </Draggable>
                   ))}
