@@ -1,11 +1,31 @@
-import { ReactElement } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 import { SideNavBar } from "../components/SideNavBar";
+import { TopNavBar } from "../components/TopNavBar";
+
+function Container({ children }: PropsWithChildren) {
+  return <div className="flex h-full">{children}</div>;
+}
+
+function Main({ children }: PropsWithChildren) {
+  return (
+    <main className="h-full flex-grow flex flex-col overflow-x-hidden">
+      {children}
+    </main>
+  );
+}
+
+function Content({ children }: PropsWithChildren) {
+  return <div className="h-full flex-grow p-4 overflow-x-auto">{children}</div>;
+}
 
 export function AppLayout(page: ReactElement) {
   return (
-    <div className="flex h-full overflow-hidden">
+    <Container>
       <SideNavBar />
-      <main className="h-full">{page}</main>
-    </div>
+      <Main>
+        <TopNavBar />
+        <Content>{page}</Content>
+      </Main>
+    </Container>
   );
 }

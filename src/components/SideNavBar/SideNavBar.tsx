@@ -42,28 +42,27 @@ export function SideNavBar() {
   return (
     <aside
       className={clsx(
-        "w-72 box-border h-full flex-shrink-0",
+        "w-72 py-12 box-border h-full shrink-0",
+        "flex flex-col space-y-8",
         "shadow-[inset_-2px_0_0_rgba(240,240,240,1)]"
       )}
     >
-      <div className="h-full flex flex-col space-y-8 py-12">
-        <div className="text-xl font-medium px-14 shrink-0">taskez</div>
-        <div className="flex flex-col flex-grow">
-          <nav className="flex flex-col flex-grow space-y-4">
-            {MAIN_NAV_ITEMS.map((item) => (
-              <NavItem key={item.path} href={item.path}>
-                {item.name}
-              </NavItem>
-            ))}
-          </nav>
-          <nav className="flex flex-col space-y-4">
-            {SECONDARY_NAV_ITEMS.map((item) => (
-              <NavItem key={item.path} href={item.path}>
-                {item.name}
-              </NavItem>
-            ))}
-          </nav>
-        </div>
+      <div className="text-xl font-medium px-14 shrink-0">taskez</div>
+      <div className="flex flex-col flex-grow">
+        <nav className="flex flex-col flex-grow space-y-4">
+          {MAIN_NAV_ITEMS.map((item) => (
+            <NavItem key={item.path} href={item.path}>
+              {item.name}
+            </NavItem>
+          ))}
+        </nav>
+        <nav className="flex flex-col space-y-4">
+          {SECONDARY_NAV_ITEMS.map((item) => (
+            <NavItem key={item.path} href={item.path}>
+              {item.name}
+            </NavItem>
+          ))}
+        </nav>
       </div>
     </aside>
   );

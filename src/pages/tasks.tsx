@@ -14,10 +14,10 @@ const TaskDrawerWithoutSSR = dynamic(
 
 export default function TasksPage() {
   return (
-    <>
+    <div className="relative h-full">
       <BoardWithoutSSR />
       <TaskDrawerWithoutSSR />
-    </>
+    </div>
   );
 }
 
