@@ -1,5 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+const bcrypt = require("bcrypt");
 
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -14,7 +15,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
-      async authorize(values: unknown, _req) {
+      authorize: async (values: unknown, _req) => {
         const credentials = values as LoginFormValues | undefined;
         if (
           !credentials ||
@@ -23,20 +24,25 @@ export const authOptions: NextAuthOptions = {
         ) {
           return null;
         }
-        const user = prisma.user.findFirst({
-          where: {
-            email: credentials.email,
-          },
-        });
+        try {
+          const record = await prisma.user.findFirst({
+            where: {
+              email: credentials.email,
+            },
+          });
 
-        // console.log("authorize", { credentials });
+          if (!record || !credentials.password) {
+            return null;
+          }
 
-        // const user = {
-        //   email: "johndoe@example.domain",
-        //   name: "John Doe",
-        // };
+          const { password, ...user } = record;
+          const isMatch = await bcrypt.compare(credentials.password, password);
 
-        return user;
+          return isMatch ? user : null;
+        } catch (e) {
+          console.error(e);
+          return null;
+        }
       },
     }),
   ],
