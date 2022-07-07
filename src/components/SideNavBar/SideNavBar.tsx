@@ -1,17 +1,13 @@
 import clsx from "clsx";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import {
   CalendarBlank,
   ChartBar,
-  Chat,
   ChatTeardropDots,
   FolderOpen,
   Gear,
   House,
   SignOut,
 } from "phosphor-react";
-import { ReactElement } from "react";
 import { ROUTES } from "../../routes";
 import { NavItem } from "./NavLink";
 
