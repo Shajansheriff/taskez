@@ -1,37 +1,47 @@
+import { Status, Task } from "@prisma/client";
 import clsx from "clsx";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { trpc } from "../../utils/trpc";
+import { AddTask } from "./AddTask";
 import { reorderList } from "./reorder";
 
 export default function Board() {
   const statuses = ["To do", "In Progress", "Done"];
   const [state, setState] = useState<{
     columns: Record<
-      string,
+      Status,
       {
-        id: string;
+        id: Status;
         name: string;
-        items: { id: string; name: string; description: string }[];
+        items: Task[];
       }
     >;
-    columnOrder: string[];
+    columnOrder: Status[];
   }>({
-    columns: statuses.reduce((obj, status) => {
-      const tasks = Array.from({ length: 20 }, (_, index) => {
-        return {
-          id: String(index + 1) + status,
-          name: "Hello " + index + status,
-          description: "lorem ipsum" + index,
-        };
-      });
-      return {
-        ...obj,
-        [status]: { id: status, name: status, items: tasks },
-      };
-    }, {}),
-    columnOrder: statuses,
+    columns: {
+      [Status.TODO]: { id: Status.TODO, name: Status.TODO, items: [] },
+      [Status.IN_PROGRESS]: {
+        id: Status.IN_PROGRESS,
+        name: Status.IN_PROGRESS,
+        items: [],
+      },
+      [Status.COMPLETED]: {
+        id: Status.COMPLETED,
+        name: Status.COMPLETED,
+        items: [],
+      },
+    },
+    columnOrder: [],
   });
+
+  const { data } = trpc.useQuery(["task.board"]);
+  useEffect(() => {
+    if (data) {
+      setState(data);
+    }
+  }, [data]);
 
   function onDragEnd(result: any) {
     if (!result.destination) {
@@ -115,14 +125,12 @@ export default function Board() {
           <div
             key={column.id}
             className={clsx(
-              "flex flex-col flex-shrink-0 h-full bg-[#f5f9f9] p-4 gap-4",
+              "flex flex-col w-80 flex-shrink-0 h-full bg-[#f5f9f9] p-4 gap-4",
               "rounded-2xl"
             )}
           >
             <div className="text-sm font-medium">{column.name}</div>
-            <button className="bg-[#ECF3F3] text-center text-primary outline-primary py-3">
-              +
-            </button>
+            <AddTask status={column.id} />
             <Droppable droppableId={column.id}>
               {(provided) => (
                 <div
