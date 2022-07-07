@@ -15,9 +15,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(
     <div>
       <input
         type="text"
-        name="first-name"
-        id="first-name"
-        autoComplete="given-name"
         className={clsx(
           "peer",
           "h-10 border border-[#CBDBEA]",

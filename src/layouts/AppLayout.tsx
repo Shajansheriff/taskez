@@ -1,6 +1,7 @@
 import { PropsWithChildren, ReactElement } from "react";
 import { SideNavBar } from "../components/SideNavBar";
 import { TopNavBar } from "../components/TopNavBar";
+import { AuthGuard } from "../guards/AuthGuard";
 
 function Container({ children }: PropsWithChildren) {
   return <div className="flex h-full">{children}</div>;
@@ -20,12 +21,14 @@ function Content({ children }: PropsWithChildren) {
 
 export function AppLayout(page: ReactElement) {
   return (
-    <Container>
-      <SideNavBar />
-      <Main>
-        <TopNavBar />
-        <Content>{page}</Content>
-      </Main>
-    </Container>
+    <AuthGuard>
+      <Container>
+        <SideNavBar />
+        <Main>
+          <TopNavBar />
+          <Content>{page}</Content>
+        </Main>
+      </Container>
+    </AuthGuard>
   );
 }

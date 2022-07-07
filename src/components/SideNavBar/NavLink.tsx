@@ -12,7 +12,6 @@ export function NavItem({
   children: ReactNode;
 }) {
   const { pathname } = useRouter();
-  console.log({ pathname, href, startsWith: pathname.startsWith(href) });
 
   return (
     <Link href={href} passHref>

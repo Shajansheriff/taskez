@@ -2,16 +2,13 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 const bcrypt = require("bcrypt");
 
-// Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../../../server/db/client";
 import { LoginFormValues } from "../../../schemas/login";
 
 export const authOptions: NextAuthOptions = {
-  // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    // ...add more providers here
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
@@ -64,11 +61,19 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user, account, profile, isNewUser }) {
       console.log("jwt", { token, user, account, profile, isNewUser });
+      if (typeof user !== typeof undefined) {
+        token.user = user;
+      }
       return token;
     },
   },
   pages: {
     signIn: "/signup",
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
   },
 };
 

@@ -2,12 +2,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { ROUTES } from "../../../routes";
 import { LoginFormValues, loginSchema } from "../../../schemas/login";
 import { Button, Input } from "../../common";
 import { Form } from "../BaseForm";
 
 export function LoginForm() {
   const router = useRouter();
+  const callbackUrl = router.query.callbackUrl;
   const {
     register,
     handleSubmit,
@@ -24,7 +26,10 @@ export function LoginForm() {
         redirect: false,
       });
       if (response?.ok) {
-        return router.push("/tasks");
+        const url = Array.isArray(callbackUrl)
+            ? callbackUrl[0]
+            : callbackUrl;
+        return router.push(url ?? ROUTES.app.home);
       }
     } catch (e) {
       console.error(e);

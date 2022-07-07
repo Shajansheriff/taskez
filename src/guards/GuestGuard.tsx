@@ -1,15 +1,15 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 
-export function GuestGuard({ children }: PropsWithChildren) {
+export function GuestGuard({ children }: PropsWithChildren): ReactElement {
   const { status } = useSession();
   const router = useRouter();
   switch (status) {
     case "loading":
-      return <>Loading...</>;
+      return <>Loading....</>;
     case "authenticated":
-      return router.push("/");
+      return <>{router.push("/")}</>;
     case "unauthenticated":
       return <>{children}</>;
   }

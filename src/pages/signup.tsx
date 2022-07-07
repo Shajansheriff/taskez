@@ -2,6 +2,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { LoginForm } from "../components/Auth/LoginForm";
 import { SignupForm } from "../components/Auth/SignupForm";
 import { GuestGuard } from "../guards/GuestGuard";
+import { PlainLayout } from "../layouts/PlainLayout";
 
 export default function LoginPage() {
   return (
@@ -29,3 +30,5 @@ export default function LoginPage() {
     </GuestGuard>
   );
 }
+
+LoginPage.getLayout = PlainLayout;

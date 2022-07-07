@@ -1,21 +1,12 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { trpc } from "../utils/trpc";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { ROUTES } from "../routes";
 
-const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from taskez" }]);
-
-  return (
-    <>
-      <Head>
-        <title>Taskez</title>
-        <meta name="description" content="A task management app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <div>{hello.data?.greeting}</div>
-    </>
-  );
+const IndexPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace(ROUTES.app.home);
+  });
 };
 
-export default Home;
+export default IndexPage;

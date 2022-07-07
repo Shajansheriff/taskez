@@ -2,28 +2,29 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
+import { ROUTES } from "../../routes";
 import { NavItem } from "./NavLink";
 
 const MAIN_NAV_ITEMS = [
   {
     name: "Overview",
-    path: "/home",
+    path: ROUTES.app.home,
   },
   {
     name: "Stats",
-    path: "/stats",
+    path: ROUTES.app.stats,
   },
   {
     name: "Tasks",
-    path: "/tasks",
+    path: ROUTES.app.tasks,
   },
   {
     name: "Chat",
-    path: "/chat",
+    path: ROUTES.app.chat,
   },
   {
     name: "Calendar",
-    path: "/calendar",
+    path: ROUTES.app.calendar,
   },
 ];
 
