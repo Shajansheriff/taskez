@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../../../server/db/client";
+import { LoginFormValues } from "../../../schemas/login";
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
@@ -13,7 +14,8 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
-      async authorize(credentials: Record<string, string> | undefined, _req) {
+      async authorize(values: unknown, _req) {
+        const credentials = values as LoginFormValues | undefined;
         if (
           !credentials ||
           Array.isArray(credentials) ||
@@ -26,6 +28,13 @@ export const authOptions: NextAuthOptions = {
             email: credentials.email,
           },
         });
+
+        // console.log("authorize", { credentials });
+
+        // const user = {
+        //   email: "johndoe@example.domain",
+        //   name: "John Doe",
+        // };
 
         return user;
       },
@@ -51,6 +60,9 @@ export const authOptions: NextAuthOptions = {
       console.log("jwt", { token, user, account, profile, isNewUser });
       return token;
     },
+  },
+  pages: {
+    signIn: "/signup",
   },
 };
 
