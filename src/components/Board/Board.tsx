@@ -5,39 +5,15 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ROUTES } from "../../routes";
 import { trpc } from "../../utils/trpc";
+import { Avatar } from "../common/Avatar";
 import { AddTask } from "./AddTask";
 import { reorderList } from "./reorder";
 
 export default function Board() {
-  const statuses = ["To do", "In Progress", "Done"];
-  const [state, setState] = useState<{
-    columns: Record<
-      Status,
-      {
-        id: Status;
-        name: string;
-        items: Task[];
-      }
-    >;
-    columnOrder: Status[];
-  }>({
-    columns: {
-      [Status.TODO]: { id: Status.TODO, name: Status.TODO, items: [] },
-      [Status.IN_PROGRESS]: {
-        id: Status.IN_PROGRESS,
-        name: Status.IN_PROGRESS,
-        items: [],
-      },
-      [Status.COMPLETED]: {
-        id: Status.COMPLETED,
-        name: Status.COMPLETED,
-        items: [],
-      },
-    },
-    columnOrder: [],
-  });
-
   const { data } = trpc.useQuery(["task.board"]);
+  const { mutate } = trpc.useMutation(["task.update"]);
+  const [state, setState] = useState<typeof data>();
+
   useEffect(() => {
     if (data) {
       setState(data);
@@ -45,6 +21,9 @@ export default function Board() {
   }, [data]);
 
   function onDragEnd(result: any) {
+    if (!state) {
+      return;
+    }
     if (!result.destination) {
       return;
     }
@@ -62,9 +41,12 @@ export default function Board() {
       return;
     }
 
+    const sourceDroppableId = result.source.droppableId as Status;
+    const destinationDroppableId = result.destination.droppableId as Status;
+
     // reordering in same list
-    if (result.source.droppableId === result.destination.droppableId) {
-      const column = state.columns[result.source.droppableId];
+    if (sourceDroppableId === destinationDroppableId) {
+      const column = state.columns[sourceDroppableId];
       if (column) {
         const items = reorderList(
           column.items,
@@ -89,9 +71,18 @@ export default function Board() {
     }
 
     // moving between lists
-    const sourceColumn = state.columns[result.source.droppableId]!;
-    const destinationColumn = state.columns[result.destination.droppableId]!;
-    const item = sourceColumn.items[result.source.index]!;
+    const sourceColumn = state.columns[sourceDroppableId];
+    const destinationColumn = state.columns[destinationDroppableId];
+    if (!sourceColumn || !destinationColumn) {
+      return;
+    }
+    const item = sourceColumn.items[result.source.index];
+
+    if (!item) {
+      return;
+    }
+
+    mutate({ id: item.id, status: destinationDroppableId });
 
     // 1. remove item from source column
     const newSourceColumn = {
@@ -122,7 +113,7 @@ export default function Board() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex h-full grow flex-nowrap overflow-y-auto gap-6">
-        {Object.values(state.columns).map((column) => (
+        {Object.values(state?.columns ?? {}).map((column) => (
           <div
             key={column.id}
             className={clsx(
@@ -168,6 +159,10 @@ export default function Board() {
                               <p className="text-xs text-[#6B6B6B]">
                                 {item.description}
                               </p>
+                              <Avatar
+                                name={item.createdBy?.name ?? ""}
+                                alt={item.createdBy?.name ?? ""}
+                              />
                             </div>
                           </a>
                         </Link>

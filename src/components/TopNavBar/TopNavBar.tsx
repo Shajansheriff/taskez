@@ -1,4 +1,5 @@
 import { MagnifyingGlass } from "phosphor-react";
+import { Avatar } from "../common/Avatar";
 
 export function TopNavBar() {
   return (
@@ -7,7 +8,9 @@ export function TopNavBar() {
         <div className="flex items-center space-x-2 text-gray-400">
           <MagnifyingGlass /> <div>Search</div>
         </div>
-        <div>A/C</div>
+        <div>
+          <Avatar size="lg" alt={"john doe"} name="john doe" />
+        </div>
       </div>
     </header>
   );

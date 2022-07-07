@@ -1,4 +1,4 @@
-import { Status, Task } from "@prisma/client";
+import { Status } from "@prisma/client";
 import {
   createTaskSchema,
   updateTaskSchema,
@@ -26,7 +26,9 @@ export const taskRouter = createRouter()
   })
   .query("board", {
     resolve: async ({ ctx }) => {
-      const tasks = await ctx.prisma.task.findMany();
+      const tasks = await ctx.prisma.task.findMany({
+        include: { createdBy: true },
+      });
 
       return {
         columns: statuses.reduce((obj, status) => {
@@ -40,7 +42,7 @@ export const taskRouter = createRouter()
               }),
             },
           };
-        }, {} as Record<Status, { id: Status; name: string; items: Task[] }>),
+        }, {} as Record<Status, { id: Status; name: string; items: typeof tasks }>),
         columnOrder: statuses,
       };
     },

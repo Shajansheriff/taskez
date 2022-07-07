@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
+import { ROUTES } from "../../routes";
 
 export function NavItem({
   href,
@@ -13,9 +14,7 @@ export function NavItem({
 }) {
   const { pathname } = useRouter();
   const isActive =
-    pathname.split("/").length === href.split("/").length
-      ? pathname === href
-      : pathname.startsWith(href);
+    href === ROUTES.app.root ? pathname === href : pathname.startsWith(href);
   return (
     <Link href={href} passHref>
       <a

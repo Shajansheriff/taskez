@@ -7,8 +7,9 @@ import "react-modern-drawer/dist/index.css";
 import { ROUTES } from "../../routes";
 
 import { trpc } from "../../utils/trpc";
+import { Avatar } from "../common/Avatar";
 
-function TaskDetail({ taskId }: { taskId: string }) {
+export function TaskDetail({ taskId }: { taskId: string }) {
   const { data } = trpc.useQuery(["task.get", { id: taskId }], {
     staleTime: 0,
   });
@@ -92,8 +93,12 @@ function TaskDetail({ taskId }: { taskId: string }) {
                 <div className="text-[#6B6B6B] text-xs p-2 px-4 shrink-0">
                   Created by
                 </div>
-                <div className="w-full pl-4 text-[#2E2E2E] text-sm">
-                  {data.createdBy?.name}
+                <div className="w-full flex items-center space-x-2 pl-4 text-[#2E2E2E] text-sm">
+                  <Avatar
+                    alt={data.createdBy?.name ?? ""}
+                    name={data.createdBy?.name ?? ""}
+                  />
+                  <div>{data.createdBy?.name}</div>
                 </div>
               </div>
               <div className="flex items-start">
