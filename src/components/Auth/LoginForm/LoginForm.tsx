@@ -26,10 +26,8 @@ export function LoginForm() {
         redirect: false,
       });
       if (response?.ok) {
-        const url = Array.isArray(callbackUrl)
-            ? callbackUrl[0]
-            : callbackUrl;
-        return router.push(url ?? ROUTES.app.home);
+        const url = Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl;
+        return router.push(url ?? ROUTES.app.root);
       }
     } catch (e) {
       console.error(e);

@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
+import { ROUTES } from "../routes";
 
 export function AuthGuard({ children }: PropsWithChildren) {
   const router = useRouter();
@@ -8,7 +9,7 @@ export function AuthGuard({ children }: PropsWithChildren) {
   const { status } = useSession({
     required: true,
     onUnauthenticated() {
-      router.push(`/login?callbackUrl=${router.asPath}`);
+      router.push(`${ROUTES.login}?callbackUrl=${router.asPath}`);
     },
   });
 

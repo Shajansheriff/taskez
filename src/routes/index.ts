@@ -1,6 +1,5 @@
 const APP_ROUTES = {
   root: "/",
-  home: "/home",
   tasks: "/tasks",
   stats: "/stats",
   chat: "/chat",

@@ -8,7 +8,7 @@ import { NavItem } from "./NavLink";
 const MAIN_NAV_ITEMS = [
   {
     name: "Overview",
-    path: ROUTES.app.home,
+    path: ROUTES.app.root,
   },
   {
     name: "Stats",

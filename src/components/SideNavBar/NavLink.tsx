@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { AnchorHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export function NavItem({
   href,
@@ -12,13 +12,16 @@ export function NavItem({
   children: ReactNode;
 }) {
   const { pathname } = useRouter();
-
+  const isActive =
+    pathname.split("/").length === href.split("/").length
+      ? pathname === href
+      : pathname.startsWith(href);
   return (
     <Link href={href} passHref>
       <a
         className={clsx(
           "px-14 py-2 w-full hover:text-primary",
-          pathname.startsWith(href)
+          isActive
             ? "text-primary shadow-primary shadow-[inset_-4px_0_0]"
             : "text-[#9a9a9a]"
         )}
