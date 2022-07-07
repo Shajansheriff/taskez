@@ -8,4 +8,11 @@ export const createTaskSchema = z.object({
   status: z.nativeEnum(Status),
 });
 
+export const updateTaskSchema = z.object({
+  name: z.string().min(1).optional(),
+  status: z.nativeEnum(Status).optional(),
+  description: z.string().optional(),
+  id: z.string(),
+});
+
 export type CreateTaskPayload = z.infer<typeof createTaskSchema>;
