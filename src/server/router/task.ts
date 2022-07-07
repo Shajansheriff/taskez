@@ -34,7 +34,7 @@ export const taskRouter = createRouter()
             ...obj,
             [status]: {
               id: status,
-              name: status,
+              name: status.toLowerCase().split("_").join(" "),
               items: tasks.filter((task) => {
                 return task.status === status;
               }),

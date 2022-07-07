@@ -130,7 +130,7 @@ export default function TaskDrawer() {
     <Drawer
       open={!!taskId}
       direction="right"
-      className="!w-full md:!w-[532px]"
+      className="!w-full md:!w-[532px] rounded-l-2xl"
       enableOverlay={false}
     >
       {taskId ? <TaskDetail taskId={taskId} /> : null}

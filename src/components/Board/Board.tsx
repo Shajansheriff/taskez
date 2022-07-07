@@ -3,6 +3,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { ROUTES } from "../../routes";
 import { trpc } from "../../utils/trpc";
 import { AddTask } from "./AddTask";
 import { reorderList } from "./reorder";
@@ -120,7 +121,7 @@ export default function Board() {
   }
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex h-full flex-nowrap gap-6">
+      <div className="flex h-full grow flex-nowrap overflow-y-auto gap-6">
         {Object.values(state.columns).map((column) => (
           <div
             key={column.id}
@@ -129,7 +130,7 @@ export default function Board() {
               "rounded-2xl"
             )}
           >
-            <div className="text-sm font-medium">{column.name}</div>
+            <div className="text-sm font-medium capitalize">{column.name}</div>
             <AddTask status={column.id} />
             <Droppable droppableId={column.id}>
               {(provided) => (
@@ -145,8 +146,8 @@ export default function Board() {
                     >
                       {(dragProvided, dragSnapshot) => (
                         <Link
-                          href={`/tasks?taskId=${item.id}`}
-                          as={`/tasks/${item.id}`}
+                          href={`${ROUTES.app.tasks}?taskId=${item.id}`}
+                          as={`${ROUTES.app.tasks}/${item.id}`}
                         >
                           <a
                             ref={dragProvided.innerRef}
