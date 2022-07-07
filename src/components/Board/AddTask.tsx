@@ -2,6 +2,7 @@ import { FocusEventHandler, useEffect, useRef, useState } from "react";
 import Textarea from "rc-textarea";
 import { trpc } from "../../utils/trpc";
 import { Status } from "@prisma/client";
+import { Plus } from "phosphor-react";
 
 export function AddTask({ status }: { status: Status }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,9 +47,9 @@ export function AddTask({ status }: { status: Status }) {
       onClick={() => {
         setIsOpen(true);
       }}
-      className="bg-[#ECF3F3] text-center text-primary outline-primary py-3"
+      className="bg-[#ECF3F3] flex justify-center items-center text-primary outline-primary py-3"
     >
-      +
+      <Plus />
     </button>
   );
 }

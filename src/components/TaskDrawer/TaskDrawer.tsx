@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
+import { Trash, X } from "phosphor-react";
 import TextArea from "rc-textarea";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
@@ -57,21 +58,25 @@ function TaskDetail({ taskId }: { taskId: string }) {
                 "rounded-lg px-2 py-1 text-sm",
                 "border border-gray-300 ",
                 "hover:bg-green-50 hover:text-green-700 hover:border-green-700",
-                data.status === "COMPLETED" && "bg-green-50 text-green-700 border-green-700"
+                data.status === "COMPLETED" &&
+                  "bg-green-50 text-green-700 border-green-700"
               )}
               onClick={data.status === "COMPLETED" ? markTodo : markComplete}
             >
               {data.status === "COMPLETED" ? "Completed" : "Mark complete"}
             </button>
             <div className="flex shrink-0 items-center gap-2">
-              <button onClick={() => deleteTask(taskId)} className="block">
-                del
+              <button
+                onClick={() => deleteTask(taskId)}
+                className="w-8 h-8 flex items-center justify-center  hover:text-red-600"
+              >
+                <Trash />
               </button>
               <button
-                className="w-8 h-8 flex items-center justify-center p-4"
+                className="w-8 h-8 flex items-center justify-center"
                 onClick={goToTasks}
               >
-                x
+                <X />
               </button>
             </div>
           </header>

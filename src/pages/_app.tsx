@@ -2,6 +2,7 @@
 import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/router";
 import superjson from "superjson";
+import { IconContext } from "phosphor-react";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import type { NextPage } from "next";
@@ -23,9 +24,15 @@ const MyApp = ({
 }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? AppLayout;
   return (
-    <SessionProvider session={session}>
-      {getLayout(<Component {...pageProps} />)}
-    </SessionProvider>
+    <IconContext.Provider
+      value={{
+        size: 20,
+      }}
+    >
+      <SessionProvider session={session}>
+        {getLayout(<Component {...pageProps} />)}
+      </SessionProvider>
+    </IconContext.Provider>
   );
 };
 
