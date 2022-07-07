@@ -21,6 +21,9 @@ export function SignupForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <Form onSubmit={handleSubmit((payload) => mutation.mutate(payload))}>
+      <div className="space-y-1">
+        <h6 className="text-[#1A3B58] text-xl">Create an account</h6>
+      </div>
       <Input
         type="text"
         placeholder="Full Name"
