@@ -5,8 +5,10 @@ import { trpc } from "../../../utils/trpc";
 import { Button, Input } from "../../common";
 import { Form } from "../BaseForm";
 
-export function SignupForm() {
-  const mutation = trpc.useMutation(["auth.signup"]);
+export function SignupForm({ onSuccess }: { onSuccess: () => void }) {
+  const mutation = trpc.useMutation(["auth.signup"], {
+    onSuccess,
+  });
 
   const {
     register,

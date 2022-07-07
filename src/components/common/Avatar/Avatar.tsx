@@ -14,7 +14,7 @@ export function Avatar({
   return (
     <RxAvatar.Root
       className={clsx(
-        "w-6 h-6 rounded-full overflow-hidden",
+        "rounded-full overflow-hidden",
         "inline-flex items-center justify-center bg-primary",
         size === "xs" && "w-6 h-6",
         size === "sm" && "w-8 h-8",

@@ -1,7 +1,9 @@
+import { useSession } from "next-auth/react";
 import { MagnifyingGlass } from "phosphor-react";
 import { Avatar } from "../common/Avatar";
 
 export function TopNavBar() {
+  const { data } = useSession();
   return (
     <header className="shrink-0 sticky w-full h-16 p-4">
       <div className="flex w-full h-full items-center justify-between">
@@ -9,7 +11,11 @@ export function TopNavBar() {
           <MagnifyingGlass /> <div>Search</div>
         </div>
         <div>
-          <Avatar size="lg" alt={"john doe"} name="john doe" />
+          <Avatar
+            size="md"
+            alt={data?.user?.name ?? ""}
+            name={data?.user?.name ?? ""}
+          />
         </div>
       </div>
     </header>

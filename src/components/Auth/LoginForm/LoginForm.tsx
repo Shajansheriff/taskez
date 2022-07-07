@@ -37,7 +37,7 @@ export function LoginForm() {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-1">
         <h6 className="text-[#1A3B58] text-xl">To continue</h6>
-        <p className="text-xs text-[#999999]">We need your Name & Password </p>
+        <p className="text-xs text-[#999999]">We need your Email & Password </p>
       </div>
       <Input
         type="email"
