@@ -9,6 +9,7 @@ import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import type { ReactElement, ReactNode } from "react";
 import { AppLayout } from "../layouts";
+import Head from "next/head";
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,6 +31,13 @@ const MyApp = ({
       }}
     >
       <SessionProvider session={session}>
+        <Head>
+          <title>Taskez</title>
+          <meta
+            name="description"
+            content="Taskez - A simple task management app for everyday use"
+          />
+        </Head>
         {getLayout(<Component {...pageProps} />)}
       </SessionProvider>
     </IconContext.Provider>

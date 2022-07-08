@@ -16,6 +16,7 @@ export default function LoginPage() {
             <Avatar.AvatarImage
               className="w-full h-full object-contain"
               src="/images/login-banner.png"
+              alt="taskez login banner image"
             />
           </Avatar.Root>
           <div className="w-full lg:w-[576px] shrink-0 rounded-[64px] p-8 lg:p-14 border-2 border-gray">

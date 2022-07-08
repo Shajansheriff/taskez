@@ -18,5 +18,5 @@ export function AuthGuard({ children }: PropsWithChildren) {
     return <Loader />;
   }
 
-  return children;
+  return <>{children}</>;
 }
