@@ -43,7 +43,7 @@ export function SignupForm({ onSuccess }: { onSuccess: () => void }) {
         error={errors.password?.message}
       />
 
-      <Button disabled={mutation.isLoading} type="submit">
+      <Button isLoading={mutation.isLoading} type="submit">
         Sign up
       </Button>
     </Form>

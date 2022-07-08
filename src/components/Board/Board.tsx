@@ -6,11 +6,12 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ROUTES } from "../../routes";
 import { trpc } from "../../utils/trpc";
 import { Avatar } from "../common/Avatar";
+import { Loader } from "../common/Loader";
 import { AddTask } from "./AddTask";
 import { reorderList } from "./reorder";
 
 export default function Board() {
-  const { data } = trpc.useQuery(["task.board"]);
+  const { data, isLoading } = trpc.useQuery(["task.board"]);
   const { mutate } = trpc.useMutation(["task.update"]);
   const [state, setState] = useState<typeof data>();
 
@@ -110,7 +111,9 @@ export default function Board() {
 
     setState(newState);
   }
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex h-full grow flex-nowrap overflow-y-auto gap-6">
         {Object.values(state?.columns ?? {}).map((column) => (

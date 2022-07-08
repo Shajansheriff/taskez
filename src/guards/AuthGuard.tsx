@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
+import { Loader } from "../components/common/Loader";
 import { ROUTES } from "../routes";
 
 export function AuthGuard({ children }: PropsWithChildren) {
@@ -14,8 +15,8 @@ export function AuthGuard({ children }: PropsWithChildren) {
   });
 
   if (status === "loading") {
-    return <>Loading...</>;
+    return <Loader />;
   }
 
-  return <>{children}</>;
+  return children;
 }

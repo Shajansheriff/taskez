@@ -8,6 +8,7 @@ import { ROUTES } from "../../routes";
 
 import { trpc } from "../../utils/trpc";
 import { Avatar } from "../common/Avatar";
+import { Loader } from "../common/Loader";
 
 export function TaskDetail({ taskId }: { taskId: string }) {
   const { data } = trpc.useQuery(["task.get", { id: taskId }], {
@@ -50,7 +51,7 @@ export function TaskDetail({ taskId }: { taskId: string }) {
   return (
     <>
       {!data ? (
-        <>Loading...</>
+        <Loader />
       ) : (
         <>
           <header className="border-b px-4 py-2 border-b-gray-300 flex justify-between">

@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ROUTES } from "../../../routes";
 import { LoginFormValues, loginSchema } from "../../../schemas/login";
@@ -19,12 +20,16 @@ export function LoginForm() {
     shouldUseNativeValidation: true,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (payload: LoginFormValues) => {
     try {
+      setIsLoading(true);
       const response = await signIn("credentials", {
         ...payload,
         redirect: false,
       });
+      setIsLoading(false);
       if (response?.ok) {
         const url = Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl;
         return router.push(url ?? ROUTES.app.root);
@@ -61,7 +66,9 @@ export function LoginForm() {
         </label>
       </div>
 
-      <Button type="submit">Login</Button>
+      <Button isLoading={isLoading} type="submit">
+        Login
+      </Button>
     </Form>
   );
 }

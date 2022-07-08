@@ -17,3 +17,7 @@ body,
   border-bottom: 3px solid #1a3b58;
   color: #1a3b58;
 }
+
+.sync-loader > span {
+  @apply !bg-primary;
+}

@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren, ReactElement, useEffect } from "react";
+import { Loader } from "../components/common/Loader";
 import { ROUTES } from "../routes";
 
 export function GuestGuard({ children }: PropsWithChildren): ReactElement {
@@ -18,6 +19,6 @@ export function GuestGuard({ children }: PropsWithChildren): ReactElement {
       return <>{children}</>;
     case "loading":
     default:
-      return <>Loading....</>;
+      return <Loader />;
   }
 }
