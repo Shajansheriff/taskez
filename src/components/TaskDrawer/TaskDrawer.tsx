@@ -96,6 +96,7 @@ export function TaskDetail({ taskId }: { taskId: string }) {
                 </div>
                 <div className="w-full flex items-center space-x-2 pl-4 text-[#2E2E2E] text-sm">
                   <Avatar
+                    src={data.createdBy.image ?? ""}
                     alt={data.createdBy?.name ?? ""}
                     name={data.createdBy?.name ?? ""}
                   />

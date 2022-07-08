@@ -163,6 +163,7 @@ export default function Board() {
                                 {item.description}
                               </p>
                               <Avatar
+                                src={item.createdBy.image ?? ""}
                                 name={item.createdBy?.name ?? ""}
                                 alt={item.createdBy?.name ?? ""}
                               />

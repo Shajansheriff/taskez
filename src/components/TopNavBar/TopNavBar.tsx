@@ -13,6 +13,7 @@ export function TopNavBar() {
         <div>
           <Avatar
             size="md"
+            src={data?.user?.image ?? ""}
             alt={data?.user?.name ?? ""}
             name={data?.user?.name ?? ""}
           />
